@@ -9,6 +9,10 @@
 - [🧠 AI Use](#ai)
 
 <div id="overview"></a>
+  
+## 📋 IMPORTANT 
+Clone this repository and share a link from your profile with the recruitment team. Do not create pull requests as it's a public repository.  
+
 
 ## 📋 Project Overview
 
