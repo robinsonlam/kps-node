@@ -1,7 +1,7 @@
 # Task Manager API - TypeScript Interview Challenge
 
 ## Outline
-- [📋 Project Overview](#important)
+- [📋 Important](#important)
 - [📋 Project Overview](#introduction)
 - [🚀 Quick Start Guide](#quickstart)
 - [🛠️ Implementation Requirements](#requirements)
