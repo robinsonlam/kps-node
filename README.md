@@ -1,6 +1,7 @@
 # Task Manager API - TypeScript Interview Challenge
 
 ## Outline
+- [📋 Project Overview](#important)
 - [📋 Project Overview](#introduction)
 - [🚀 Quick Start Guide](#quickstart)
 - [🛠️ Implementation Requirements](#requirements)
@@ -11,7 +12,7 @@
 <div id="overview"></a>
   
 ## 📋 IMPORTANT 
-Clone this repository and share a link from your profile with the recruitment team. Do not create pull requests as it's a public repository.  
+**After you complete your work, please publish it to your own git repository and share the link with the talent team. **
 
 
 ## 📋 Project Overview
