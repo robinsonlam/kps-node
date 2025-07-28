@@ -23,9 +23,16 @@ export const errorHandler = (
   // - Return appropriate HTTP status codes
   // - Format error responses consistently
   // - Log errors appropriately
-  
-  console.error('Error:', err);
-  
+
+  if (err.name === 'ValidationError') {
+    res.status(400).json({
+      error: {
+        message: (err as any)?.details[0].message || 'Request Validation Error', // ! Remove any...
+        timestamp: new Date().toISOString(),
+      },
+    })
+  }
+
   // Default error response
   res.status(err.statusCode || 500).json({
     error: {

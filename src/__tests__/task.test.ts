@@ -189,7 +189,7 @@ describe('Task API Integration Tests', () => {
       expect(response.body.dueDate).toBeUndefined();
     });
 
-    it.only('should return 400 when title is missing', async () => {
+    it('should return 400 when title is missing', async () => {
       const taskData = {
         priority: 'high',
       };
