@@ -1,6 +1,7 @@
 import { Request, Response, NextFunction } from 'express';
 import { Task, CreateTaskRequest, TaskQueryParams } from '../types/task';
 import { TaskService } from '../services/taskService';
+import { createTaskSchema } from '../validation/taskValidation';
 // Import your validation schemas when ready
 // import { createTaskSchema } from '../validation/taskValidation';
 
@@ -36,10 +37,13 @@ export const createTask = async (req: Request, res: Response, next: NextFunction
     // TODO: Implement create task
     // - Validate request body using Joi schema
 
-    const taskData: Task = {
-      ...req.body
-    };
+    const validation = createTaskSchema.validate(req?.body);
 
+    if (validation?.error) {
+      throw validation.error;
+    }
+    
+    const taskData: CreateTaskRequest = validation?.value;
     const newTask = await TaskService.createTask(taskData);
 
     res.status(201).send(newTask);

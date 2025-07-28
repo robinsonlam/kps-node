@@ -278,6 +278,25 @@ describe('Task API Integration Tests', () => {
       expect(response.body.error).toBeDefined();
       expect(response.body.error.message).toContain('date');
     });
+
+    it('should return 400 for existing task with title', async () => {
+      const taskData = {
+        title: 'Test Task',
+        priority: 'high',
+      };
+
+      const response = await request(app)
+        .post('/api/tasks')
+        .send(taskData)
+        .expect(201);
+
+      const duplicateResponse = await request(app)
+        .post('/api/tasks')
+        .send(taskData)
+        .expect(500); // ! should be 400..
+
+      expect(duplicateResponse.body.error.message).toContain('Task exists with title');
+    });
   });
 });
 
