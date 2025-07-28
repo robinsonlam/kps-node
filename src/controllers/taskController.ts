@@ -1,5 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
 import { Task, CreateTaskRequest, TaskQueryParams } from '../types/task';
+import { TaskService } from '../services/taskService';
 // Import your validation schemas when ready
 // import { createTaskSchema } from '../validation/taskValidation';
 
@@ -18,12 +19,13 @@ import { Task, CreateTaskRequest, TaskQueryParams } from '../types/task';
 export const getAllTasks = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
   try {
     // TODO: Implement get all tasks
-    // - Extract query parameters for filtering (status, priority)
-    // - Call task service method
     // - Sort by priority then by createdAt
     // - Return filtered and sorted tasks
-    
-    res.status(501).json({ message: 'Not implemented yet' });
+
+    const { status, priority }: TaskQueryParams = req.query;
+    const tasks = await TaskService.getAllTasks({ status, priority });
+    res.send(tasks);
+
   } catch (error) {
     next(error);
   }
@@ -33,10 +35,14 @@ export const createTask = async (req: Request, res: Response, next: NextFunction
   try {
     // TODO: Implement create task
     // - Validate request body using Joi schema
-    // - Call task service to create task
-    // - Return 201 with created task
-    
-    res.status(501).json({ message: 'Not implemented yet' });
+
+    const taskData: Task = {
+      ...req.body
+    };
+
+    const newTask = await TaskService.createTask(taskData);
+
+    res.status(201).send(newTask);
   } catch (error) {
     next(error);
   }

@@ -1,5 +1,5 @@
 import { v4 as uuidv4 } from 'uuid';
-import { Task, CreateTaskRequest, TaskQueryParams } from '../types/task';
+import { Task, CreateTaskRequest, TaskQueryParams, TaskPriority } from '../types/task';
 
 /**
  * Task Service - Business Logic Layer
@@ -13,31 +13,46 @@ import { Task, CreateTaskRequest, TaskQueryParams } from '../types/task';
 // In-memory storage (for this interview - normally you'd use a database)
 const tasks: Task[] = [];
 
+// * priority order, high to low (by array index)
+const priorityOrder: TaskPriority[] = ['high', 'medium', 'low'];
+
 export class TaskService {
   
   static async getAllTasks(queryParams?: TaskQueryParams): Promise<Task[]> {
-    // TODO: Implement getting all tasks with filtering
-    // - Filter by status if provided
-    // - Filter by priority if provided  
-    // - Sort by priority (high -> medium -> low) then by createdAt
-    // - Return filtered and sorted tasks
-    
-    throw new Error('Not implemented yet');
+    // * TODO: Possibly make this nicer
+    const filteredTasks = tasks.filter((t) => {
+      const isPriority = t.priority === (queryParams?.priority || t.priority);
+      const isStatus = t.status === (queryParams?.status || t.status);
+      return isPriority && isStatus;
+    });
+
+    const sortedTasks = filteredTasks.sort(this.sortTasksByPriority);
+    return sortedTasks;
   }
 
   static async createTask(taskData: CreateTaskRequest): Promise<Task> {
-    // TODO: Implement creating a new task
-    // - Generate UUID for id
-    // - Set default status to 'pending'
-    // - Set createdAt and updatedAt to current time
-    // - Add to tasks array
-    // - Return created task
-    
-    throw new Error('Not implemented yet');
+    const newTask: Task = {
+      id: uuidv4(),
+      ...taskData,
+      status: 'pending',
+      createdAt: new Date(),
+      updatedAt: new Date(),
+    }
+
+    tasks.push(newTask);
+
+    return newTask;
   }
 
   // Test helper method - clears all tasks for testing
   static async clearAllTasks(): Promise<void> {
     tasks.length = 0;
+  }
+
+  // * Helper Methods for Tasks
+  static sortTasksByPriority(a: Task, b: Task) {
+    const indexA = priorityOrder.indexOf(a?.priority);
+    const indexB = priorityOrder.indexOf(b?.priority);
+    return indexA - indexB
   }
 } 
